@@ -5,7 +5,9 @@ import { Filter } from 'components/Filter/Filter';
 import css from './App.module.css';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(localStorage.getItem('contacts')) ?? []
+  );
   const [filter, setFilter] = useState('');
 
   const ContactsData = {
@@ -14,17 +16,6 @@ export const App = () => {
   };
 
   useEffect(() => {
-    const stringifiedContacts = localStorage.getItem('contacts');
-    const contactsArr = JSON.parse(stringifiedContacts) ?? [];
-    setContacts(contactsArr);
-  }, []);
-
-  useEffect(() => {
-    if (contacts.length === 0) {
-      localStorage.removeItem('contacts');
-      return;
-    }
-
     const stringifiedContacts = JSON.stringify(contacts);
     localStorage.setItem('contacts', stringifiedContacts);
   }, [contacts]);
