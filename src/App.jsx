@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ContactForm } from 'components/ContactForm/ContactForm';
-import ContactList from 'components/ContactList/ContactList';
-import Filter from 'components/Filter/Filter';
+import { ContactList } from 'components/ContactList/ContactList';
+import { Filter } from 'components/Filter/Filter';
 import css from './App.module.css';
 
 export const App = () => {
@@ -21,8 +21,10 @@ export const App = () => {
 
   useEffect(() => {
     if (contacts.length === 0) {
+      localStorage.removeItem('contacts');
       return;
     }
+
     const stringifiedContacts = JSON.stringify(contacts);
     localStorage.setItem('contacts', stringifiedContacts);
   }, [contacts]);
